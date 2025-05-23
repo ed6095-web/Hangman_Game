@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 maxHints = 2;
                 break;
             case 'moderate':
-                maxHints = 1;
+                maxHints = 3;
                 break;
             case 'hard':
-                maxHints = 1;
+                maxHints = 4;
                 break;
             default:
                 maxHints = 1;
