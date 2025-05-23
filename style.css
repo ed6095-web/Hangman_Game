@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #6c5ce7; /* Medium difficulty active color */
+    --primary-color: #6c5ce7; /* Moderate difficulty active color */
     --secondary-color: #a29bfe;
     --background-start: #dfe6e9;
     --background-end: #b2bec3;
@@ -11,14 +11,14 @@
 
     /* Difficulty Active Colors */
     --easy-active-color: #2ecc71;   /* Green */
-    --moderate-active-color: var(--primary-color);
+    /* --moderate-active-color is the same as --primary-color by default for this example */
     --hard-active-color: #e74c3c;    /* Red */
 
     /* Hint Button Colors */
     --hint-bg-color: #f1c40f; /* Yellow */
     --hint-text-color: #333;
-    --hint-glow-color: rgba(241, 196, 15, 0.8); /* Brighter glow */
-    --hint-icon-color: #4A4A4A; /* Color for the bulb icon */
+    --hint-glow-color: rgba(241, 196, 15, 0.8);
+    --hint-icon-color: #4A4A4A;
 }
 
 * {
@@ -55,8 +55,16 @@ main {
     flex-direction: column;
     align-items: center;
     width: 95%;
+    /*
+       The max-width property below limits how wide the game content can become.
+       This is to prevent it from looking too stretched on very wide desktop screens.
+       If you feel the game is too "small" on your desktop, you can:
+       1. Increase this value (e.g., to 1000px, 1200px).
+       2. Change it to a viewport width unit (e.g., max-width: 80vw; for 80% of viewport width).
+       3. Remove it entirely if you want it to always be 95% of the window width (might look odd on very wide screens).
+    */
     max-width: 800px;
-    position: relative; /* For potential absolute positioning within main if needed */
+    position: relative;
 }
 
 /* HINT BUTTON - POSITIONED TOP RIGHT */
@@ -64,30 +72,30 @@ main {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 100; /* Below modal (1000) and confetti (999) */
+    z-index: 100;
     
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between icon, text label, and count */
+    gap: 8px;
     
     background-color: var(--hint-bg-color);
     color: var(--hint-text-color);
     border: none;
     padding: 8px 15px;
     font-size: 0.9rem;
-    border-radius: 25px; /* Pill shape for the button */
+    border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease, transform 0.15s ease;
     box-shadow: 0 3px 8px rgba(0,0,0,0.2), 0 0 0px transparent;
     min-width: 110px;
     justify-content: center;
-    line-height: 1.2; /* Ensure text aligns well vertically */
+    line-height: 1.2;
 }
 
 .bulb-icon {
-    font-size: 1.2em; /* Make bulb icon slightly larger */
+    font-size: 1.2em;
     color: var(--hint-icon-color);
-    line-height: 1; /* Helps with vertical alignment of the icon */
+    line-height: 1;
 }
 
 #hint-button.light-button .hint-text-label {
@@ -96,13 +104,13 @@ main {
 
 #hint-button.light-button #hints-remaining {
     font-weight: normal;
-    font-size: 0.9em; /* Slightly smaller than the main "Hint" text */
+    font-size: 0.9em;
     opacity: 0.9;
-    margin-left: -3px; /* Fine-tune spacing */
+    margin-left: -3px;
 }
 
 #hint-button.light-button:hover:not(:disabled) {
-    background-color: hsl(47, 88%, 60%); /* Lighten yellow */
+    background-color: hsl(47, 88%, 60%);
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 5px 12px rgba(0,0,0,0.25), 0 0 20px var(--hint-glow-color);
 }
@@ -131,7 +139,7 @@ main {
     -webkit-backdrop-filter: blur(8px);
     border-radius: 10px;
     padding: 15px 20px;
-    margin-top: 70px; /* Adjust if hint button overlaps too much or if header is tall */
+    margin-top: 70px;
     margin-bottom: 20px;
     box-shadow: 0 6px 20px rgba(31, 38, 135, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -153,13 +161,13 @@ main {
     gap: 10px;
 }
 
-.difficulty-options label { /* This is the clickable area containing radio and span */
+.difficulty-options label {
     cursor: pointer;
-    border-radius: 6px; /* Apply to label for consistent click area shape */
+    border-radius: 6px;
     transition: box-shadow 0.3s ease;
     font-weight: 500;
     font-size: 0.9rem;
-    display: inline-block; /* Or flex for better internal alignment if needed */
+    display: inline-block;
 }
 
 .difficulty-options input[type="radio"] {
@@ -169,10 +177,10 @@ main {
     height: 0;
 }
 
-.difficulty-options label span { /* The visible "button" text part */
+.difficulty-options label span {
     display: inline-block;
     padding: 8px 12px;
-    border-radius: inherit; /* Inherit from label */
+    border-radius: inherit;
     background-color: rgba(255,255,255,0.6);
     border: 1px solid rgba(0,0,0,0.1);
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -183,16 +191,16 @@ main {
     border-color: var(--secondary-color);
 }
 
-.difficulty-options input[value="easy"]:checked ~ span { /* Using general sibling combinator */
+.difficulty-options input[value="easy"]:checked ~ span {
     background-color: var(--easy-active-color);
     color: white;
     border-color: var(--easy-active-color);
     box-shadow: 0 2px 8px rgba(46, 204, 113, 0.5);
 }
-.difficulty-options input[value="moderate"]:checked ~ span {
-    background-color: var(--moderate-active-color);
+.difficulty-options input[value="moderate"]:checked ~ span { /* Changed from medium to moderate */
+    background-color: var(--primary-color); /* Uses primary color as its active color */
     color: white;
-    border-color: var(--moderate-active-color);
+    border-color: var(--primary-color);
     box-shadow: 0 2px 8px rgba(108, 92, 231, 0.5);
 }
 .difficulty-options input[value="hard"]:checked ~ span {
@@ -319,7 +327,7 @@ main {
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0 6px 20px rgba(31, 38, 135, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Completing the line from thought */
+    border: 1px solid rgba(255, 255, 255, 0.15);
     width: 100%;
     min-height: 150px;
 }
@@ -368,8 +376,8 @@ main {
     box-shadow: 0 3px #008c70;
 }
 
-.key-button.hint-revealed { /* Optional style for hint-revealed keys */
-    background-color: var(--hint-bg-color) !important; /* Ensure it overrides .correct if needed */
+.key-button.hint-revealed {
+    background-color: var(--hint-bg-color) !important;
     color: var(--hint-text-color) !important;
     box-shadow: 0 3px darken(var(--hint-bg-color), 15%) !important;
 }
@@ -411,7 +419,7 @@ main {
     flex-wrap: wrap;
 }
 
-#reset-button, #play-again-button { /* Play again button is in modal */
+#reset-button, #play-again-button {
     font-family: var(--font-family);
     background-color: var(--primary-color);
     color: white;
@@ -441,7 +449,6 @@ main {
     cursor: not-allowed;
     opacity: 0.7;
 }
-
 
 /* Modal Styles */
 .modal {
@@ -566,12 +573,12 @@ footer {
         font-size: 1.1em;
     }
     #difficulty-selector-container {
-        margin-top: 60px; /* Adjust for smaller hint button */
+        margin-top: 60px;
     }
     #difficulty-selector-container h2 {
         font-size: 1.2rem;
     }
-    .difficulty-options label span { /* Keep span for consistency */
+    .difficulty-options label span {
         padding: 7px 10px;
         font-size: 0.85rem;
     }
@@ -600,26 +607,26 @@ footer {
     }
     header h1 {
         font-size: 1.8rem;
-        margin-top: 45px; /* Push header down if hint button is too close */
+        margin-top: 45px;
     }
     #hint-button.light-button {
         top: 10px;
         right: 10px;
         padding: 6px 10px;
         font-size: 0.8rem;
-        min-width: auto; /* Allow it to shrink more */
+        min-width: auto;
     }
      #hint-button.light-button .hint-text-label {
-        display: none; /* Hide "Hint" text on very small screens, icon and count suffice */
+        display: none;
     }
     #hint-button.light-button #hints-remaining {
-        font-size: 0.85em; /* Ensure count is visible */
+        font-size: 0.85em;
     }
 
     #difficulty-selector-container {
         padding: 10px 15px;
         margin-bottom: 15px;
-        margin-top: 10px; /* Readjust if header was pushed down */
+        margin-top: 10px;
     }
     #difficulty-selector-container h2 {
         font-size: 1.1rem;
@@ -630,7 +637,7 @@ footer {
         gap: 8px;
     }
     .difficulty-options label span {
-        width: 100%; /* Make labels take more width when stacked */
+        width: 100%;
         text-align: center;
     }
 
