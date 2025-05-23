@@ -6,13 +6,19 @@
     <title>Hangman Game by CHITTY</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    </head>
+</head>
 <body>
     <header>
         <h1>Hangman</h1>
     </header>
 
     <main>
+        <button id="hint-button" class="light-button">
+            <span class="bulb-icon">💡</span>
+            <span class="hint-text-label">Hint</span>
+            <span id="hints-remaining">(0 left)</span>
+        </button>
+
         <section id="difficulty-selector-container">
             <h2>Choose Difficulty:</h2>
             <div class="difficulty-options">
@@ -21,8 +27,7 @@
                     <span>Easy</span>
                 </label>
                 <label>
-                    <input type="radio" name="difficulty" value="moderate" checked>
-                    <span>Moderate</span>
+                    <input type="radio" name="difficulty" value="moderate" checked> <span>Moderate</span>
                 </label>
                 <label>
                     <input type="radio" name="difficulty" value="hard">
@@ -34,11 +39,7 @@
         <section id="game-container">
             <div id="hangman-drawing">
                 <svg height="250" width="200" class="hangman-svg">
-                    <line x1="60" y1="230" x2="180" y2="230" class="hangman-part" />
-                    <line x1="100" y1="230" x2="100" y2="50"  class="hangman-part" />
-                    <line x1="100" y1="50" x2="150" y2="50"   class="hangman-part" />
-                    <line x1="150" y1="50" x2="150" y2="80"   class="hangman-part" />
-                    <circle cx="150" cy="100" r="20" class="hangman-part body-part" id="head" />
+                    <line x1="60" y1="230" x2="180" y2="230" class="hangman-part" /> <line x1="100" y1="230" x2="100" y2="50"  class="hangman-part" /> <line x1="100" y1="50" x2="150" y2="50"   class="hangman-part" /> <line x1="150" y1="50" x2="150" y2="80"   class="hangman-part" /> <circle cx="150" cy="100" r="20" class="hangman-part body-part" id="head" />
                     <line x1="150" y1="120" x2="150" y2="170" class="hangman-part body-part" id="body" />
                     <line x1="150" y1="130" x2="120" y2="150" class="hangman-part body-part" id="left-arm" />
                     <line x1="150" y1="130" x2="180" y2="150" class="hangman-part body-part" id="right-arm" />
@@ -49,7 +50,8 @@
 
             <div id="word-display-container">
                 <h2>Guess the Word:</h2>
-                <div id="word-display"></div>
+                <div id="word-display">
+                    </div>
             </div>
 
             <div id="guesses-left-container">
@@ -58,14 +60,12 @@
         </section>
 
         <section id="keyboard-container">
-            <div id="keyboard"></div>
+            <div id="keyboard">
+                </div>
         </section>
 
         <section id="controls-container">
             <button id="reset-button">New Word / Reset</button>
-            <button id="hint-button" class="light-button">
-                Hint <span id="hints-remaining"></span>
-                </button>
         </section>
 
         <div id="game-over-modal" class="modal">
@@ -76,10 +76,11 @@
             </div>
         </div>
         <div id="confetti-container"></div>
+
     </main>
 
     <footer>
-        By CHITTY</p>
+        <p>&copy; 2025 Hangman Game - By CHITTY</p>
     </footer>
 
     <script src="script.js"></script>
