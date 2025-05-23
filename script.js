@@ -3,22 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let guessedLetters = [];
     let incorrectGuesses = 0;
     const maxIncorrectGuesses = 6;
-    let currentDifficulty = 'moderate'; // Default difficulty changed to 'moderate'
+    let currentDifficulty = 'moderate'; // Default difficulty
 
     // Hint related variables
     let hintsRemaining = 0;
     let maxHints = 0;
 
-    // Sound Effects - Make sure to replace 'your_sound_file.mp3' with your actual filenames
+    // Sound Effects - Make sure to replace with your actual filenames in assets/sounds/
     const correctSound = new Audio('assets/sounds/correct_sound.mp3');
     const incorrectSound = new Audio('assets/sounds/incorrect_sound.mp3');
     const winSound = new Audio('assets/sounds/win_sound.mp3');
     const loseSound = new Audio('assets/sounds/lose_sound.mp3');
     const hintUsedSound = new Audio('assets/sounds/hint_sound.mp3');
     const modeChangeSound = new Audio('assets/sounds/mode_change_sound.mp3');
-    // === NEW SOUND EFFECT FOR RESET ===
-    const resetSound = new Audio('assets/sounds/reset_sound.mp3'); // Replace with your reset sound filename
-    // === END OF NEW SOUND ===
+    const resetSound = new Audio('assets/sounds/reset_sound.mp3');
 
     const wordDisplay = document.getElementById('word-display');
     const guessesLeftDisplay = document.getElementById('guesses-left');
@@ -43,25 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (modeChangeSound) modeChangeSound.play().catch(e => console.error("Error playing mode change sound:", e));
             }
             currentDifficulty = this.value;
-            // Update radio button checked state visually based on currentDifficulty
-            difficultyRadios.forEach(r => {
-                r.checked = r.value === currentDifficulty;
-            });
+            // Visually update which radio is checked (though browser does this, good for state consistency if needed elsewhere)
+            difficultyRadios.forEach(r => r.checked = (r.value === currentDifficulty));
             initializeGame();
         });
     });
 
     hintButton.addEventListener('click', useHint);
 
-    // Initialize Reset Button Listener
     resetButton.addEventListener('click', () => {
         if (resetSound) resetSound.play().catch(e => console.error("Error playing reset sound:", e));
         initializeGame();
     });
 
-    // Initialize Play Again Button Listener (in modal)
     playAgainButton.addEventListener('click', () => {
-        if (resetSound) resetSound.play().catch(e => console.error("Error playing reset sound:", e)); // Also play reset sound here
+        if (resetSound) resetSound.play().catch(e => console.error("Error playing reset sound:", e));
         initializeGame();
     });
 
@@ -71,13 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'easy':
                 maxHints = 2;
                 break;
-            case 'moderate': // Changed from 'medium'
-                maxHints = 3;
+            case 'moderate':
+                maxHints = 1;
                 break;
             case 'hard':
-                maxHints = 4;
+                maxHints = 1;
                 break;
-            default: // Should default to 'moderate' if currentDifficulty is somehow unset
+            default:
                 maxHints = 1;
         }
         hintsRemaining = maxHints;
@@ -114,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 guessedLetters.push(hintLetter);
                 letterButtonElement.disabled = true;
                 letterButtonElement.classList.add('correct');
+                // letterButtonElement.classList.add('hint-revealed'); // Optional
 
                 updateWordDisplay();
                 checkWinCondition();
@@ -131,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         switch (currentDifficulty) {
             case 'easy': wordLengthMin = 3; wordLengthMax = 5; break;
             case 'hard': wordLengthMin = 9; wordLengthMax = 12; break;
-            case 'moderate': // Changed from 'medium'
+            case 'moderate':
             default: wordLengthMin = 6; wordLengthMax = 8; break;
         }
 
@@ -148,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await response.json();
                     const word = data[0] ? data[0].toUpperCase() : null;
                     if (word && /^[A-Z]+$/.test(word) && word.length === targetLength) return word;
-                    console.warn(`Invalid word (len ${targetLength}): ${word}. Attempt ${attempt + 1}`);
+                    // console.warn(`Invalid word (len ${targetLength}): ${word}. Attempt ${attempt + 1}`);
                 }
             } catch (error) { console.error(`Err fetch len ${targetLength}:`, error); }
         }
@@ -164,10 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Ultimate fallback: Using predefined word for difficulty: " + currentDifficulty);
         const fallbacks = {
             "easy": ["CAT", "SUN", "DOG", "RUN", "FLY"],
-            "moderate": ["PLANET", "ORANGE", "ACTIVE", "SILVER", "PYTHON"], // Changed from 'medium'
+            "moderate": ["PLANET", "ORANGE", "ACTIVE", "SILVER", "PYTHON"],
             "hard": ["CHAMPION", "KEYBOARD", "LANGUAGE", "WONDERFUL", "MYSTERY"]
         };
-        const set = fallbacks[currentDifficulty] || fallbacks["moderate"]; // Default to moderate set
+        const set = fallbacks[currentDifficulty] || fallbacks["moderate"];
         return set[Math.floor(Math.random() * set.length)];
     }
 
@@ -176,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         wordDisplay.innerHTML = '<p class="loading-text">Fetching a new word...</p>';
         keyboardContainer.innerHTML = '';
 
-        // Ensure the correct radio button is visually checked
         difficultyRadios.forEach(radio => {
             radio.checked = radio.value === currentDifficulty;
         });
@@ -354,8 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         confettiContainer.innerHTML = '';
     }
 
-    // Initial game setup
-    // Set initial checked state for difficulty radio based on currentDifficulty
+    // Initial game setup: Ensure the correct radio button is checked based on currentDifficulty
     difficultyRadios.forEach(radio => {
         if (radio.value === currentDifficulty) {
             radio.checked = true;
